@@ -17,7 +17,6 @@
     @6 RET
 
 @1 @2 XNOR:
-    @1 @2 NOR @3
-    @1 @2 AND @4
-    @3 @4 OR @5
-    @5 RET
+    @1 @2 XOR @3
+    @3 NAND @3
+    @3 RET

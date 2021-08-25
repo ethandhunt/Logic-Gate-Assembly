@@ -123,7 +123,7 @@ def run(line, instruction, stack='main', returnTo=[]):
         OUT(args, out, stack)
     elif command == 'RET':
         for index, location in enumerate(returnTo):
-            setMem(location, getMem(args[min(len(args) - 1, index)], scope=stack), scope=stack)
+            setMem(location, getMem(args[min(len(args) - 1, index)], scope=stack), scope=' '.join(stack.split(' ')[:-1]))
     elif command[0] == '#':
         pass
     else:
@@ -153,6 +153,8 @@ for line in program.split('\n'):
     if line == '':
         continue
     if line[-1] == ':':
+        if inFunction:
+            lastRoutine = []
         lastDefiner = line
         inFunction = True
     elif line.startswith('    '):
@@ -166,6 +168,7 @@ for line in program.split('\n'):
     else:
         inFunction = False
         define(lastDefiner, lastRoutine)
+        lastRoutine = []
 
     if line[0] == '#':
         if line == '#DEBUG':
@@ -187,6 +190,7 @@ for line in library.split('\n'):
     if line[-1] == ':':
         if inFunction:
             define(lastDefiner, lastRoutine)
+            lastRoutine = []
         lastDefiner = line
         inFunction = True
     elif line.startswith('    '):
@@ -196,6 +200,7 @@ for line in library.split('\n'):
     else:
         inFunction = False
         define(lastDefiner, lastRoutine)
+        lastRoutine = []
 if inFunction:
     define(lastDefiner, lastRoutine)
 
