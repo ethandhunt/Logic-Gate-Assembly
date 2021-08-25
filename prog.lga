@@ -1,0 +1,13 @@
+#DEBUG
+DO
+1 NAND 2
+DO
+2 AND 1
+2 NAND 2
+DO
+1 AND 2
+DO
+DO:
+    1 2 XOR 3
+    1 2 3 OUT TERM
+    # test
