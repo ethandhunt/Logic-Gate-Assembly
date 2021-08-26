@@ -2,6 +2,10 @@ MEMORY = {}
 
 
 def getMem(location, scope='main'):
+    if location[0] == '@':
+        location = '@' + str(abs(int(location[1:])))
+    else:
+        location = str(abs(int(location)))
     if debug:
         print(f'     ^getMem | {scope} | {location}')
     if location[0] != '@':
@@ -124,6 +128,10 @@ def run(line, instruction, stack='main', returnTo=[]):
     elif command == 'RET':
         for index, location in enumerate(returnTo):
             setMem(location, getMem(args[min(len(args) - 1, index)], scope=stack), scope=' '.join(stack.split(' ')[:-1]))
+    elif command == 'IF':
+        if args != []:
+            if getMem(args[0], scope=stack):
+                run(' '.join(args[1:] + out), 0, stack=stack, returnTo=returnTo)
     elif command[0] == '#':
         pass
     else:

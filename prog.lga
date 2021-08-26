@@ -1,12 +1,8 @@
-DO
-1 NAND 2
-DO
-2 AND 1
-2 NAND 2
-DO
-1 AND 2
-DO
+DONTDO:
+    @1 OUT TERM
 DO:
-    1 2 NOR 3
-    1 2 3 OUT TERM
-    # test
+    @1 NAND @1
+    @1 OUT TERM
+1 IF DONTDO
+1 NAND 1
+1 IF DO
